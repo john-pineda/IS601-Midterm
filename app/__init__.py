@@ -25,7 +25,7 @@ class App:
         self.command_handler.register_command("greet", GreetCommand())
         self.command_handler.register_command("goodbye", GoodbyeCommand())
         self.command_handler.register_command("exit", ExitCommand())
-        self.command_handler.register_command("menu", MenuCommand())
+        self.command_handler.register_command("menu", MenuCommand(self.command_handler))
         self.command_handler.register_command("discord", DiscordCommand())
 
         print("Type 'exit' to exit.")

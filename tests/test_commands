@@ -1,6 +1,7 @@
 import pytest
 from app import App
 from app.commands.add import AddCommand
+from app.commands import CommandHandler
 from app.commands.subtract import SubtractCommand
 from app.commands.goodbye import GoodbyeCommand
 from app.commands.greet import GreetCommand
@@ -88,5 +89,16 @@ def test_app_menu_command(capfd, monkeypatch):
     
     assert str(e.value) == "Exiting...", "The app did not exit as expected"
 
-
+def test_menu_command(capfd, monkeypatch):
+    command_handler = CommandHandler()
+    command_handler.register_command("greet", GreetCommand())
+    command_handler.register_command("goodbye", GoodbyeCommand())
+    
+    command = MenuCommand(command_handler)
+    command.execute()
+    
+    out, err = capfd.readouterr()
+    assert "Available Commands:" in out
+    assert "- greet" in out
+    assert "- goodbye" in out
 
