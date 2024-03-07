@@ -1,0 +1,92 @@
+import pytest
+from app import App
+from app.commands.add import AddCommand
+from app.commands.subtract import SubtractCommand
+from app.commands.goodbye import GoodbyeCommand
+from app.commands.greet import GreetCommand
+from app.commands.multiply import MultiplyCommand
+from app.commands.divide import DivideCommand
+
+def test_add_command(capfd, monkeypatch):
+    inputs = iter(['5', '3'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+    
+    command = AddCommand()
+    command.execute()
+    
+    out, err = capfd.readouterr()
+    assert "Result of 5.0 + 3.0 = 8.0" in out
+
+def test_subtract_command(capfd, monkeypatch):
+    inputs = iter(['5', '3'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+    
+    command = SubtractCommand()
+    command.execute()
+    
+    out, err = capfd.readouterr()
+    assert "Result of 5.0 - 3.0 = 2.0" in out
+
+
+
+def test_multiply_command(capfd, monkeypatch):
+    inputs = iter(['5', '3'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+    
+    command = MultiplyCommand()
+    command.execute()
+    
+    out, err = capfd.readouterr()
+    assert "Result of 5.0 * 3.0 = 15.0" in out
+
+
+
+def test_divide_command(capfd, monkeypatch):
+    inputs = iter(['5', '2'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+    
+    command = DivideCommand()
+    command.execute()
+    
+    out, err = capfd.readouterr()
+    assert "Result of 5.0 / 2.0 = 2.5" in out
+
+
+def test_greet_command(capfd):
+    command = GreetCommand()
+    command.execute()
+    out, err = capfd.readouterr()
+    assert out == "Hello, World!\n", "The GreetCommand should print 'Hello, World!'"
+
+def test_goodbye_command(capfd):
+    command = GoodbyeCommand()
+    command.execute()
+    out, err = capfd.readouterr()
+    assert out == "Goodbye\n", "The GreetCommand should print 'Hello, World!'"
+
+def test_app_greet_command(capfd, monkeypatch):
+    """Test that the REPL correctly handles the 'greet' command."""
+    # Simulate user entering 'greet' followed by 'exit'
+    inputs = iter(['greet', 'exit'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+
+    app = App()
+    with pytest.raises(SystemExit) as e:
+        app.start()  # Assuming App.start() is now a static method based on previous discussions
+    
+    assert str(e.value) == "Exiting...", "The app did not exit as expected"
+
+def test_app_menu_command(capfd, monkeypatch):
+    """Test that the REPL correctly handles the 'greet' command."""
+    # Simulate user entering 'greet' followed by 'exit'
+    inputs = iter(['menu', 'exit'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+
+    app = App()
+    with pytest.raises(SystemExit) as e:
+        app.start()  # Assuming App.start() is now a static method based on previous discussions
+    
+    assert str(e.value) == "Exiting...", "The app did not exit as expected"
+
+
+
