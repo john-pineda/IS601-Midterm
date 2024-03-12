@@ -1,5 +1,5 @@
-from app.commands import Command
 
+from app.commands import Command
 
 class MenuCommand(Command):
     def __init__(self, command_handler):
