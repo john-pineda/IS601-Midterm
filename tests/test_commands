@@ -1,4 +1,5 @@
 import pytest
+import logging
 from app import App
 from app.commands import CommandHandler
 from app.plugins.add import AddCommand
@@ -7,7 +8,6 @@ from app.plugins.goodbye import GoodbyeCommand
 from app.plugins.greet import GreetCommand
 from app.plugins.multiply import MultiplyCommand
 from app.plugins.divide import DivideCommand
-
 
 def test_add_command(capfd, monkeypatch):
     inputs = iter(['5', '3'])
@@ -50,13 +50,25 @@ def test_divide_command(capfd, monkeypatch):
     assert "Result of 5.0 / 2.0 = 2.5" in out
 
 def test_greet_command(capfd):
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.info("Starting test for GreetCommand")
+    
     command = GreetCommand()
     command.execute()
+    
     out, err = capfd.readouterr()
     assert out == "Hello, World!\n", "The GreetCommand should print 'Hello, World!'"
 
+    logging.info("Test for GreetCommand completed successfully")
+
 def test_goodbye_command(capfd):
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.info("Starting test for GoodbyeCommand")
+    
     command = GoodbyeCommand()
     command.execute()
+    
     out, err = capfd.readouterr()
     assert out == "Goodbye\n", "The GoodbyeCommand should print 'Goodbye'"
+
+    logging.info("Test for GoodbyeCommand completed successfully")

@@ -1,6 +1,7 @@
 import pkgutil
 import importlib
 from app.commands import CommandHandler, Command
+import logging
 
 class App:
     def __init__(self):  
@@ -17,7 +18,6 @@ class App:
                         item = getattr(plugin_module, item_name)
                         try:
                             if issubclass(item, (Command)) and item != Command:
-                                print(f"Available command: {plugin_name}")
                                 self.command_handler.register_command(plugin_name, item())
                         except TypeError:
                             continue
@@ -25,12 +25,13 @@ class App:
 
     def start(self):
         self.load_plugins()
-        print("Type 'exit' to exit.")
+        logging.info("Application started. Type 'exit' to exit.")
         while True:
             user_input = input(">>> ").strip()
-            print(f"User input: {user_input}")
+            logging.info(f"User input: {user_input}")
             self.command_handler.execute_command(user_input)
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     app = App()
     app.start()

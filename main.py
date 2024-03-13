@@ -1,6 +1,18 @@
 # main.py
-from app import App    
+import os
+import logging
+from dotenv import load_dotenv
+from app import App
 
-# You must put this in your main.py because this forces the program to start when you run it from the command line.
 if __name__ == "__main__":
-    app = App().start()  # Instantiate an instance of App
+    # Configure logging
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logging.info("Logging configured.")
+
+    # Load environment variables
+    load_dotenv()
+    logging.info("Environment variables loaded.")
+
+    # Create an instance of the App and start it
+    app = App()
+    app.start()
