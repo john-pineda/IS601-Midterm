@@ -1,4 +1,3 @@
-# main.py
 import os
 import logging
 from dotenv import load_dotenv
@@ -14,5 +13,5 @@ if __name__ == "__main__":
     logging.info("Environment variables loaded.")
 
     # Create an instance of the App and start it
-    app = App()
+    app = App('history.csv')
     app.start()
