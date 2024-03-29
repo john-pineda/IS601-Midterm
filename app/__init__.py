@@ -2,6 +2,7 @@ import pkgutil
 import importlib
 from app.commands import CommandHandler, Command
 import logging
+from app.plugins.menu import MenuCommand  # Import MenuCommand
 
 class App:
     def __init__(self):  
@@ -22,6 +23,11 @@ class App:
                         except TypeError:
                             continue
             self.loaded_plugins = True
+ 
+ # Register MenuCommand
+        self.command_handler.register_command("menu", MenuCommand(self.command_handler))  # Register MenuCommand
+
+ 
 
     def start(self):
         self.load_plugins()
