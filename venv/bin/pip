@@ -1,4 +1,4 @@
-#!/home/jpineda/is601/calculator_design/venv/bin/python3
+#!/home/jpineda/is601/calculator_design/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

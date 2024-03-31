@@ -1,8 +1,8 @@
-
 from app.commands import Command
 
 class MenuCommand(Command):
     def __init__(self, command_handler):
+        super().__init__()  # Call the superclass constructor
         self.command_handler = command_handler
 
     def execute(self):
